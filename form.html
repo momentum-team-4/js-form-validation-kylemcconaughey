@@ -39,13 +39,13 @@
         <div class="col">
           <div class="input-field" id="cvv-field">
             <label for="cvv">CVV</label>
-            <input id="cvv" type="text" required>
+            <input id="cvv" type="text" pattern="[0-9]{3}" placeholder="###" aria-label="3-digit CVV" required>
           </div>
         </div>
         <div class="col">
           <div class="input-field" id="expiration-field">
             <label for="expiration">Expiration</label>
-            <input id="expiration" type="text" placeholder="MM/YY" required>
+            <input id="expiration" type="month" placeholder="MM/YY" required>
           </div>
         </div>
       </div>
