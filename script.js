@@ -15,29 +15,22 @@ const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const month = months[today.getMonth()];
 
-const dayIndex = today.getDay();
 
 function price() {
-    const startDate = document.querySelector('#start-date').valueAsNumber + 86400000;
-    const firstDay = new Date(startDate);
-    const weekDay = firstDay.getDay();
-    // console.log(weekDay + daysOfTheWeek[weekDay]);
+    const dayHolder = document.querySelector('#start-date').value;
+    startDate = new Date(dayHolder + 'T00:00');
+    // const firstDay = new Date(startDate);
+    const weekDay = startDate.getDay();
     const numDays = document.querySelector('#days').value;
     let priceAgg = 0;
-
     for (i = 0; i < numDays; i++) {
-        let check = weekDay + i;
-        // console.log('check: ' + check + ' -- checkmod: ' + ((check + 1) % 7));
-        // console.log('checkmod === 0 || 1: ' + (((check + 1) % 7) === 0 || 1));
-        if (((check + 1) % 7) > 1) {
+        let check = weekDay + i + 1;
+        if ((check % 7) > 1) {
             priceAgg += 5;
-            // console.log('priceAgg: ' + priceAgg + ' -- index: ' + i);
         } else {
             priceAgg += 7;
-            // console.log(priceAgg + '  index: ' + i);
         }
     }
-    // console.log('Final price: ' + priceAgg);
     return priceAgg;
 }
 
