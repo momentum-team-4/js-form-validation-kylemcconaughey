@@ -3,9 +3,7 @@ const form = document.querySelector('#parking-form');
 
 form.addEventListener('submit', function (event) {
     event.preventDefault();
-    let days = document.querySelector('#days').value;
-    console.log('$' + days + '||' + days * 5);
-    let cost = days * 5;
+    let cost = price();
 
     total.innerHTML = '$' + cost;
 })
@@ -23,22 +21,23 @@ function price() {
     const startDate = document.querySelector('#start-date').valueAsNumber + 86400000;
     const firstDay = new Date(startDate);
     const weekDay = firstDay.getDay();
-    console.log(weekDay + daysOfTheWeek[weekDay]);
+    // console.log(weekDay + daysOfTheWeek[weekDay]);
     const numDays = document.querySelector('#days').value;
     let priceAgg = 0;
 
     for (i = 0; i < numDays; i++) {
         let check = weekDay + i;
-        console.log('check: ' + check + ' -- checkmod: ' + ((check + 1) % 7));
-        if ((check + 1) % 7 !== 0 || 1) {
+        // console.log('check: ' + check + ' -- checkmod: ' + ((check + 1) % 7));
+        // console.log('checkmod === 0 || 1: ' + (((check + 1) % 7) === 0 || 1));
+        if (((check + 1) % 7) > 1) {
             priceAgg += 5;
-            console.log('priceAgg: ' + priceAgg + ' -- index: ' + i);
+            // console.log('priceAgg: ' + priceAgg + ' -- index: ' + i);
         } else {
             priceAgg += 7;
-            console.log(priceAgg + '  index: ' + i);
+            // console.log(priceAgg + '  index: ' + i);
         }
     }
-    console.log('Final price: ' + priceAgg);
+    // console.log('Final price: ' + priceAgg);
     return priceAgg;
 }
 
