@@ -92,3 +92,14 @@ parkDate.addEventListener('focusout', function () {
         parkDate.setCustomValidity('Please choose a date in the future!');
     }
 })
+
+const carYearField = document.querySelector('#car-year');
+
+carYearField.addEventListener('focusout', function () {
+    let carYear = carYearField.valueAsNumber;
+    if (carYear > year) {
+        parkDate.setCustomValidity('ruh roh')
+    } else {
+        parkDate.setCustomValidity('');
+    }
+})
