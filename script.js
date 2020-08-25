@@ -1,6 +1,7 @@
 const total = document.querySelector('#total');
 const form = document.querySelector('#parking-form');
 
+// Puts the total price in the #total div
 form.addEventListener('submit', function (event) {
     event.preventDefault();
     let cost = price();
@@ -14,12 +15,12 @@ const date = today.getDate();
 const months = ['January', 'February', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 const daysOfTheWeek = ['Sunday', 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday']
 const month = months[today.getMonth()];
+const monthIndex = today.getMonth();
 
-
+//calculates price with $5 for weekdays, $7 for weekends
 function price() {
     const dayHolder = document.querySelector('#start-date').value;
     startDate = new Date(dayHolder + 'T00:00');
-    // const firstDay = new Date(startDate);
     const weekDay = startDate.getDay();
     const numDays = document.querySelector('#days').value;
     let priceAgg = 0;
@@ -35,7 +36,7 @@ function price() {
 }
 
 ////////////////////////
-
+//magic with algorithms probably
 function validateCardNumber(number) {
     var regex = new RegExp("^[0-9]{16}$");
     if (!regex.test(number))
@@ -59,9 +60,11 @@ function luhnCheck(val) {
     return (sum % 10) == 0;
 }
 
+
 const ccnum = document.querySelector('#credit-card').value;
 const ccfield = document.querySelector('#credit-card');
 
+//Ensures credit card number is valid
 ccfield.addEventListener('focusout', function () {
     console.log(validateCardNumber(document.querySelector('#credit-card').value));
     if (validateCardNumber(document.querySelector('#credit-card').value)) {
@@ -70,10 +73,9 @@ ccfield.addEventListener('focusout', function () {
         ccfield.setCustomValidity('Please enter a 16 digit CC number')
     }
 })
-//      4111111111111111
 
 const parkDate = document.querySelector('#start-date');
-
+//ensures parking date is in the future
 parkDate.addEventListener('focusout', function () {
     let currentStamp = today.valueOf();
     let parkingStamp = parkDate.valueAsNumber + 86400000;
@@ -86,12 +88,29 @@ parkDate.addEventListener('focusout', function () {
 })
 
 const carYearField = document.querySelector('#car-year');
-
+//ensures the car year is equal to or before current year
 carYearField.addEventListener('focusout', function () {
-    let carYear = carYearField.valueAsNumber;
-    if (carYear > year) {
-        parkDate.setCustomValidity('ruh roh')
+    if (year >= document.querySelector('#car-year').valueAsNumber) {
+        carYearField.setCustomValidity('')
     } else {
-        parkDate.setCustomValidity('');
+        carYearField.setCustomValidity('Please choose a year before or equal to the current year')
+    }
+})
+
+const expField = document.querySelector('#expiration');
+//ensures the credit card expiration date is in the future
+expField.addEventListener('focusout', function () {
+    let monthTemp = document.querySelector('#expiration').valueAsDate;
+    monthTemp.setMonth(monthTemp.getMonth() + 1);
+    let yearTemp = document.querySelector('#expiration').valueAsDate;
+
+    let expMonth = monthTemp.getMonth();
+    let expYear = yearTemp.getFullYear();
+
+    if ((expMonth >= monthIndex) && (expYear >= year)) {
+        expField.setCustomValidity('')
+    } else {
+        expField.setCustomValidity('Please choose a month and year greater than or equal to the current one')
+
     }
 })
